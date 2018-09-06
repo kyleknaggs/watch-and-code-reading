@@ -323,7 +323,7 @@ jQuery(function ($) {
 		edit: function (e) {
 			// use the jquery function to create a reference to the element that triggered the event
 			// traverse up the DOM tree from that element and grab the first li element
-			// and an 'editing' class to that element
+			// and add an 'editing' class to that element
 			// before traversing down the descendants of the element with a new class of 'editing'
 			// and return a list of all the elements that have the edit class on them
 			// and store a reference to this list in a new variable called $input
