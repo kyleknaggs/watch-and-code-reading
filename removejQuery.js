@@ -121,7 +121,7 @@ jQuery(function ($) {
 		},
 		// accepts an element from inside the `.item` div and
 		// returns the corresponding index in the `todos` array
-		// removed jquery from method
+		// done
 		indexFromEl: function (el) {
 			function getParentListElement(element){
 				var elementToTest = element;
@@ -143,12 +143,10 @@ jQuery(function ($) {
 				}
 			}
 		},
-
 		// notes:
 		// 1) jQuery objects don't have a getAttribute method. You can either use .attr or .data instead
 		// 2) use element.tagName to get uppercase string of element's tag name in vanilla js
 		// 3) use element.parentNode to get parent dom node in vanilla js
-
 		create: function (e) {
 			var $input = $(e.target);
 			var val = $input.val().trim();
@@ -167,15 +165,37 @@ jQuery(function ($) {
 
 			this.render();
 		},
-		// no jquery
+		// done
 		toggle: function (e) {
 			var i = this.indexFromEl(e.target);
 			this.todos[i].completed = !this.todos[i].completed;
 			this.render();
 		},
+		// done
 		edit: function (e) {
-			var $input = $(e.target).closest('li').addClass('editing').find('.edit');
-			$input.focus();
+			// get element that triggered event
+			var target = e.target;
+			// start at that element and traverse up the DOM till we find an <li>
+			function findParentLi(){
+				var parentElement = target.parentNode;
+				while (parentElement.tagName !== 'LI') {
+					parentElement = parentElement.parentNode;
+				}
+				return parentElement;
+			}
+			var closestLi = findParentLi();
+			// add a class of editing to that element
+			closestLi.classList.add('editing');
+			// and return a list of that element's child nodes
+			var childElements = closestLi.children;
+			var input;
+			for(let i=0; i<childElements.length; i++){
+				if(childElements[i].classList.contains('edit')){
+					input = childElements[i];
+				}
+			}
+			// and place the cursor in the element
+			input.focus();
 		},
 		editKeyup: function (e) {
 			if (e.which === ENTER_KEY) {
@@ -204,7 +224,7 @@ jQuery(function ($) {
 
 			this.render();
 		},
-		// no jquery
+		// done
 		destroy: function (e) {
 			this.todos.splice(this.indexFromEl(e.target), 1);
 			this.render();
