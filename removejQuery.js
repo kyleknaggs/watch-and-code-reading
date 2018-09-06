@@ -93,16 +93,19 @@ jQuery(function ($) {
 
 			this.render();
 		},
+		// done
 		getActiveTodos: function () {
 			return this.todos.filter(function (todo) {
 				return !todo.completed;
 			});
 		},
+		// done
 		getCompletedTodos: function () {
 			return this.todos.filter(function (todo) {
 				return todo.completed;
 			});
 		},
+		// done
 		getFilteredTodos: function () {
 			if (this.filter === 'active') {
 				return this.getActiveTodos();
@@ -114,13 +117,16 @@ jQuery(function ($) {
 
 			return this.todos;
 		},
+		// done
 		destroyCompleted: function () {
 			this.todos = this.getActiveTodos();
 			this.filter = 'all';
 			this.render();
 		},
+
 		// accepts an element from inside the `.item` div and
 		// returns the corresponding index in the `todos` array
+
 		// done
 		indexFromEl: function (el) {
 			function getParentListElement(element){
@@ -143,13 +149,10 @@ jQuery(function ($) {
 				}
 			}
 		},
-		// notes:
-		// 1) jQuery objects don't have a getAttribute method. You can either use .attr or .data instead
-		// 2) use element.tagName to get uppercase string of element's tag name in vanilla js
-		// 3) use element.parentNode to get parent dom node in vanilla js
+		// done
 		create: function (e) {
-			var $input = $(e.target);
-			var val = $input.val().trim();
+			var input = e.target;
+			var val = input.value.trim();
 
 			if (e.which !== ENTER_KEY || !val) {
 				return;
@@ -161,7 +164,7 @@ jQuery(function ($) {
 				completed: false
 			});
 
-			$input.val('');
+			input.value = '';
 
 			this.render();
 		},
@@ -230,6 +233,12 @@ jQuery(function ($) {
 			this.render();
 		}
 	};
+
+	// notes:
+	// 1) jQuery objects don't have a getAttribute method. You can either use .attr or .data instead
+	// 2) use element.tagName to get uppercase string of element's tag name in vanilla js
+	// 3) use element.parentNode to get parent dom node in vanilla js
+	// done
 
 	App.init();
 });
