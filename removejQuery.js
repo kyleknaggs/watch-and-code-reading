@@ -212,20 +212,24 @@ jQuery(function ($) {
 				$(e.target).data('abort', true).blur();
 			}
 		},
+		// wait till later to figure out how to do .data() in vanilla JS
 		update: function (e) {
-			var el = e.target;
-			var $el = $(el);
-			var val = $el.val().trim();
+			var target = e.target;
+			// use the jquery object to wrap target
+			var $el = $(target);
+			var targetValue = target.value.trim();
 
-			if (!val) {
+			if (!targetValue) {
 				this.destroy(e);
 				return;
 			}
 
+			// if the abort key of the target element is set to true
 			if ($el.data('abort')) {
+				// make it false
 				$el.data('abort', false);
 			} else {
-				this.todos[this.indexFromEl(el)].title = val;
+				this.todos[this.indexFromEl(target)].title = targetValue;
 			}
 
 			this.render();
