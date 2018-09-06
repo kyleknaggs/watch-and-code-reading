@@ -202,6 +202,7 @@ jQuery(function ($) {
 			// and place the cursor in the element
 			input.focus();
 		},
+		// wait till later to figure out how to do .data() in vanilla JS
 		editKeyup: function (e) {
 			if (e.which === ENTER_KEY) {
 				e.target.blur();
