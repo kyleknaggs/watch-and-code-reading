@@ -84,8 +84,11 @@ jQuery(function ($) {
 
 			$('#footer').toggle(todoCount > 0).html(template);
 		},
+		// done
 		toggleAll: function (e) {
-			var isChecked = $(e.target).prop('checked');
+
+			var target = e.target;
+			var isChecked = target.checked;
 
 			this.todos.forEach(function (todo) {
 				todo.completed = isChecked;
@@ -123,7 +126,6 @@ jQuery(function ($) {
 			this.filter = 'all';
 			this.render();
 		},
-
 		// accepts an element from inside the `.item` div and
 		// returns the corresponding index in the `todos` array
 
