@@ -39,6 +39,7 @@ jQuery(function ($) {
 	};
 
 	var App = {
+		// done
 		init: function () {
 			this.todos = util.store('todos-jquery');
 			this.todoTemplate = Handlebars.compile($('#todo-template').html());
@@ -63,13 +64,30 @@ jQuery(function ($) {
 				.on('focusout', '.edit', this.update.bind(this))
 				.on('click', '.destroy', this.destroy.bind(this));
 		},
+		// done
 		render: function () {
 			var todos = this.getFilteredTodos();
-			$('#todo-list').html(this.todoTemplate(todos));
-			$('#main').toggle(todos.length > 0);
-			$('#toggle-all').prop('checked', this.getActiveTodos().length === 0);
+			// insert the handlebars generated mark up into #todo-list
+			var todoList = document.querySelector('#todo-list');
+			todoList.innerHTML = this.todoTemplate(todos);
+			// only show the main element if there is more than 0 todos
+			var main = document.querySelector('#main');
+			if(todos.length > 0){
+				main.style.display = 'block';
+			}else{
+				main.style.display = 'none';
+			}
+			// get the toggle-all element & set it to checked if there are 0 active todos
+			var toggleAll = document.querySelector('#toggle-all');
+			if(this.getActiveTodos().length === 0){
+				toggleAll.checked = true;
+			}else{
+				toggleAll.checked = false;
+			}
 			this.renderFooter();
-			$('#new-todo').focus();
+			// get the newTodo element and place the cursor in that element
+			var newTodo = document.querySelector('#new-todo');
+			newTodo.focus();
 			util.store('todos-jquery', this.todos);
 		},
 		// done
