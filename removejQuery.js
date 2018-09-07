@@ -53,16 +53,22 @@ jQuery(function ($) {
 				}.bind(this)
 			}).init('/all');
 		},
+		// working here
 		bindEvents: function () {
-			$('#new-todo').on('keyup', this.create.bind(this));
-			$('#toggle-all').on('change', this.toggleAll.bind(this));
-			$('#footer').on('click', '#clear-completed', this.destroyCompleted.bind(this));
-			$('#todo-list')
-				.on('change', '.toggle', this.toggle.bind(this))
-				.on('dblclick', 'label', this.edit.bind(this))
-				.on('keyup', '.edit', this.editKeyup.bind(this))
-				.on('focusout', '.edit', this.update.bind(this))
-				.on('click', '.destroy', this.destroy.bind(this));
+			// grab elements
+			var newTodo = document.querySelector('#new-todo');
+			var toggleAll = document.querySelector('#toggle-all');
+			var footer = document.querySelector('#footer');
+			var todoList = document.querySelector('#todo-list');
+			// bind events
+			newTodo.addEventListener('keyup', this.create.bind(this));
+			toggleAll.addEventListener('change', this.toggleAll.bind(this));
+			footer.addEventListener('click', this.destroyCompleted.bind(this));
+			todoList.addEventListener('change',this.toggle.bind(this));
+			todoList.addEventListener('dblclick',this.edit.bind(this));
+			todoList.addEventListener('keyup',this.editKeyup.bind(this));
+			todoList.addEventListener('focusout',this.update.bind(this));
+			todoList.addEventListener('click',this.destroy.bind(this));
 		},
 		// done
 		render: function () {
@@ -100,15 +106,15 @@ jQuery(function ($) {
 				completedTodos: todoCount - activeTodoCount,
 				filter: this.filter
 			});
-			// get footer element
+
 			var footer = document.querySelector('footer');
-			// show it if there is one or more todos
+
 			if(todoCount > 0){
 				footer.style.display = 'block';
 			}else{
 				footer.style.display = 'none';
 			}
-			// and set its html to the value stored in the template variable
+
 			footer.innerHTML = template;
 		},
 		// done
@@ -148,7 +154,10 @@ jQuery(function ($) {
 			return this.todos;
 		},
 		// done
-		destroyCompleted: function () {
+		destroyCompleted: function (e) {
+			if(e.target.id !== 'clear-completed'){
+				return;
+			}
 			this.todos = this.getActiveTodos();
 			this.filter = 'all';
 			this.render();
@@ -199,12 +208,18 @@ jQuery(function ($) {
 		},
 		// done
 		toggle: function (e) {
+			if(e.target.className !== 'toggle'){
+				return;
+			}
 			var i = this.indexFromEl(e.target);
 			this.todos[i].completed = !this.todos[i].completed;
 			this.render();
 		},
 		// done
 		edit: function (e) {
+			if(e.target.tagName !== 'LABEL'){
+				return;
+			}
 			// get element that triggered event
 			var target = e.target;
 			// start at that element and traverse up the DOM till we find an <li>
@@ -231,6 +246,9 @@ jQuery(function ($) {
 		},
 		// wait till later to figure out how to do .data() in vanilla JS
 		editKeyup: function (e) {
+			if(e.target.className !== 'edit'){
+				return;
+			}
 			if (e.which === ENTER_KEY) {
 				e.target.blur();
 			}
@@ -241,6 +259,9 @@ jQuery(function ($) {
 		},
 		// wait till later to figure out how to do .data() in vanilla JS
 		update: function (e) {
+			if(e.target.className !== 'edit'){
+				return;
+			}
 			var target = e.target;
 			// use the jquery object to wrap target
 			var $el = $(target);
@@ -263,6 +284,9 @@ jQuery(function ($) {
 		},
 		// done
 		destroy: function (e) {
+			if(e.target.className !== 'destroy'){
+				return;
+			}
 			this.todos.splice(this.indexFromEl(e.target), 1);
 			this.render();
 		}
