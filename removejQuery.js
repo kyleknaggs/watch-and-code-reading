@@ -72,6 +72,7 @@ jQuery(function ($) {
 			$('#new-todo').focus();
 			util.store('todos-jquery', this.todos);
 		},
+		// done
 		renderFooter: function () {
 			var todoCount = this.todos.length;
 			var activeTodoCount = this.getActiveTodos().length;
@@ -81,8 +82,16 @@ jQuery(function ($) {
 				completedTodos: todoCount - activeTodoCount,
 				filter: this.filter
 			});
-
-			$('#footer').toggle(todoCount > 0).html(template);
+			// get footer element
+			var footer = document.querySelector('footer');
+			// show it if there is one or more todos
+			if(todoCount > 0){
+				footer.style.display = 'block';
+			}else{
+				footer.style.display = 'none';
+			}
+			// and set its html to the value stored in the template variable
+			footer.innerHTML = template;
 		},
 		// done
 		toggleAll: function (e) {
