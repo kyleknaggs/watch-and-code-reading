@@ -1,3 +1,5 @@
+/* global jQuery, Handlebars, Router */
+
 document.addEventListener("DOMContentLoaded", function(event) {
 
 	'use strict';
