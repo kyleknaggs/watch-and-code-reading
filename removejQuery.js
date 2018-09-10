@@ -39,7 +39,6 @@ jQuery(function ($) {
 	};
 
 	var App = {
-		// done
 		init: function () {
 			this.todos = util.store('todos-jquery');
 			this.todoTemplate = Handlebars.compile($('#todo-template').html());
@@ -53,7 +52,6 @@ jQuery(function ($) {
 				}.bind(this)
 			}).init('/all');
 		},
-		// done
 		bindEvents: function () {
 			// grab elements
 			var newTodo = document.querySelector('#new-todo');
@@ -70,7 +68,6 @@ jQuery(function ($) {
 			todoList.addEventListener('focusout',this.update.bind(this));
 			todoList.addEventListener('click',this.destroy.bind(this));
 		},
-		// done
 		render: function () {
 			var todos = this.getFilteredTodos();
 			// insert the handlebars generated mark up into #todo-list
@@ -96,7 +93,6 @@ jQuery(function ($) {
 			newTodo.focus();
 			util.store('todos-jquery', this.todos);
 		},
-		// done
 		renderFooter: function () {
 			var todoCount = this.todos.length;
 			var activeTodoCount = this.getActiveTodos().length;
@@ -117,7 +113,6 @@ jQuery(function ($) {
 
 			footer.innerHTML = template;
 		},
-		// done
 		toggleAll: function (e) {
 
 			var target = e.target;
@@ -129,19 +124,16 @@ jQuery(function ($) {
 
 			this.render();
 		},
-		// done
 		getActiveTodos: function () {
 			return this.todos.filter(function (todo) {
 				return !todo.completed;
 			});
 		},
-		// done
 		getCompletedTodos: function () {
 			return this.todos.filter(function (todo) {
 				return todo.completed;
 			});
 		},
-		// done
 		getFilteredTodos: function () {
 			if (this.filter === 'active') {
 				return this.getActiveTodos();
@@ -153,7 +145,6 @@ jQuery(function ($) {
 
 			return this.todos;
 		},
-		// done
 		destroyCompleted: function (e) {
 			if(e.target.id !== 'clear-completed'){
 				return;
@@ -164,8 +155,6 @@ jQuery(function ($) {
 		},
 		// accepts an element from inside the `.item` div and
 		// returns the corresponding index in the `todos` array
-
-		// done
 		indexFromEl: function (el) {
 			function getParentListElement(element){
 				var elementToTest = element;
@@ -187,7 +176,6 @@ jQuery(function ($) {
 				}
 			}
 		},
-		// done
 		create: function (e) {
 			var input = e.target;
 			var val = input.value.trim();
@@ -206,7 +194,6 @@ jQuery(function ($) {
 
 			this.render();
 		},
-		// done
 		toggle: function (e) {
 			if(e.target.className !== 'toggle'){
 				return;
@@ -215,7 +202,6 @@ jQuery(function ($) {
 			this.todos[i].completed = !this.todos[i].completed;
 			this.render();
 		},
-		// done
 		edit: function (e) {
 			if(e.target.tagName !== 'LABEL'){
 				return;
@@ -244,7 +230,6 @@ jQuery(function ($) {
 			// and place the cursor in the element
 			input.focus();
 		},
-		// done
 		editKeyup: function (e) {
 			if(e.target.className !== 'edit'){
 				return;
@@ -257,7 +242,6 @@ jQuery(function ($) {
 				e.target.blur();
 			}
 		},
-		// done
 		update: function (e) {
 
 			if(e.target.className !== 'edit'){
@@ -280,7 +264,6 @@ jQuery(function ($) {
 
 			this.render();
 		},
-		// done
 		destroy: function (e) {
 
 			// extra condition ensures calls from update() are not exited
