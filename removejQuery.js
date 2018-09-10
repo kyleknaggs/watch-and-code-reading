@@ -40,9 +40,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	var App = {
 		init: function () {
+
+			var todoTemplate = document.querySelector('#todo-template').innerHTML;
+			var footerTemplate = document.querySelector('#footer-template').innerHTML;
+
 			this.todos = util.store('todos-jquery');
-			this.todoTemplate = Handlebars.compile($('#todo-template').html());
-			this.footerTemplate = Handlebars.compile($('#footer-template').html());
+			this.todoTemplate = Handlebars.compile(todoTemplate);
+			this.footerTemplate = Handlebars.compile(footerTemplate);
 			this.bindEvents();
 
 			new Router({
@@ -51,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					this.render();
 				}.bind(this)
 			}).init('/all');
+
 		},
 		bindEvents: function () {
 			// grab elements
@@ -227,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					input = childElements[i];
 				}
 			}
-			
+
 			input.focus();
 		},
 		editKeyup: function (e) {
