@@ -69,29 +69,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			todoList.addEventListener('click',this.destroy.bind(this));
 		},
 		render: function () {
+
 			var todos = this.getFilteredTodos();
-			// insert the handlebars generated mark up into #todo-list
 			var todoList = document.querySelector('#todo-list');
 			todoList.innerHTML = this.todoTemplate(todos);
-			// only show the main element if there is more than 0 todos
+
 			var main = document.querySelector('#main');
 			if(todos.length > 0){
 				main.style.display = 'block';
 			}else{
 				main.style.display = 'none';
 			}
-			// get the toggle-all element & set it to checked if there are 0 active todos
+
 			var toggleAll = document.querySelector('#toggle-all');
 			if(this.getActiveTodos().length === 0){
 				toggleAll.checked = true;
 			}else{
 				toggleAll.checked = false;
 			}
+
 			this.renderFooter();
-			// get the newTodo element and place the cursor in that element
 			var newTodo = document.querySelector('#new-todo');
 			newTodo.focus();
 			util.store('todos-jquery', this.todos);
+
 		},
 		renderFooter: function () {
 			var todoCount = this.todos.length;
@@ -206,9 +207,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			if(e.target.tagName !== 'LABEL'){
 				return;
 			}
-			// get element that triggered event
+
 			var target = e.target;
-			// start at that element and traverse up the DOM till we find an <li>
 			function findParentLi(){
 				var parentElement = target.parentNode;
 				while (parentElement.tagName !== 'LI') {
@@ -216,18 +216,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				}
 				return parentElement;
 			}
+
 			var closestLi = findParentLi();
-			// add a class of editing to that element
 			closestLi.classList.add('editing');
-			// and return a list of that element's child nodes
 			var childElements = closestLi.children;
 			var input;
+
 			for(let i=0; i<childElements.length; i++){
 				if(childElements[i].classList.contains('edit')){
 					input = childElements[i];
 				}
 			}
-			// and place the cursor in the element
+			
 			input.focus();
 		},
 		editKeyup: function (e) {
