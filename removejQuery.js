@@ -1,5 +1,5 @@
-/*global jQuery, Handlebars, Router */
-jQuery(function () {
+document.addEventListener("DOMContentLoaded", function(event) {
+
 	'use strict';
 
 	Handlebars.registerHelper('eq', function (a, b, options) {
@@ -279,10 +279,5 @@ jQuery(function () {
 	};
 
 	App.init();
-});
 
-// notes:
-// 1) jQuery objects don't have a getAttribute method. You can either use .attr or .data instead
-// 2) use element.tagName to get uppercase string of element's tag name in vanilla js
-// 3) use element.parentNode to get parent dom node in vanilla js
-// done
+});
