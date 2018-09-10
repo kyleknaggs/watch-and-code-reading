@@ -53,7 +53,7 @@ jQuery(function ($) {
 				}.bind(this)
 			}).init('/all');
 		},
-		// working here
+		// done
 		bindEvents: function () {
 			// grab elements
 			var newTodo = document.querySelector('#new-todo');
@@ -244,7 +244,7 @@ jQuery(function ($) {
 			// and place the cursor in the element
 			input.focus();
 		},
-		// wait till later to figure out how to do .data() in vanilla JS
+		// done
 		editKeyup: function (e) {
 			if(e.target.className !== 'edit'){
 				return;
@@ -253,14 +253,11 @@ jQuery(function ($) {
 				e.target.blur();
 			}
 			if (e.which === ESCAPE_KEY) {
-				// create an arbitrary 'abort' key on input.edit
-				// and set its value to true
-				// when a user clicks escape we don't want to save data
-				// & this is a way to reflect this
-				$(e.target).data('abort', true).blur();
+				e.target.setAttribute('data-abort', true);
+				e.target.blur();
 			}
 		},
-		// update triggered when you focus out of input
+		// done
 		update: function (e) {
 
 			if(e.target.className !== 'edit'){
@@ -268,18 +265,15 @@ jQuery(function ($) {
 			}
 
 			var el = e.target;
-			var $el = $(el);
-			var value = e.target.value.trim();
+			var value = el.value.trim();
 
 			if (!value) {
 				this.destroy(e);
 				return;
 			}
 
-			// if the abort key of the target element is set to true
-			if ($el.data('abort')) {
-				// make it false
-				$el.data('abort', false);
+			if (el.dataset.abort) {
+				el.setAttribute('data-abort', false);
 			} else {
 				this.todos[this.indexFromEl(el)].title = value;
 			}
@@ -301,11 +295,11 @@ jQuery(function ($) {
 		}
 	};
 
-	// notes:
-	// 1) jQuery objects don't have a getAttribute method. You can either use .attr or .data instead
-	// 2) use element.tagName to get uppercase string of element's tag name in vanilla js
-	// 3) use element.parentNode to get parent dom node in vanilla js
-	// done
-
 	App.init();
 });
+
+// notes:
+// 1) jQuery objects don't have a getAttribute method. You can either use .attr or .data instead
+// 2) use element.tagName to get uppercase string of element's tag name in vanilla js
+// 3) use element.parentNode to get parent dom node in vanilla js
+// done
