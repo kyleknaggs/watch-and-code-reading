@@ -252,22 +252,26 @@ jQuery(function ($) {
 			if (e.which === ENTER_KEY) {
 				e.target.blur();
 			}
-
 			if (e.which === ESCAPE_KEY) {
+				// create an arbitrary 'abort' key on input.edit
+				// and set its value to true
+				// when a user clicks escape we don't want to save data
+				// & this is a way to reflect this
 				$(e.target).data('abort', true).blur();
 			}
 		},
-		// wait till later to figure out how to do .data() in vanilla JS
+		// update triggered when you focus out of input
 		update: function (e) {
+
 			if(e.target.className !== 'edit'){
 				return;
 			}
-			var target = e.target;
-			// use the jquery object to wrap target
-			var $el = $(target);
-			var targetValue = target.value.trim();
 
-			if (!targetValue) {
+			var el = e.target;
+			var $el = $(el);
+			var value = e.target.value.trim();
+
+			if (!value) {
 				this.destroy(e);
 				return;
 			}
@@ -277,18 +281,23 @@ jQuery(function ($) {
 				// make it false
 				$el.data('abort', false);
 			} else {
-				this.todos[this.indexFromEl(target)].title = targetValue;
+				this.todos[this.indexFromEl(el)].title = value;
 			}
 
 			this.render();
 		},
 		// done
 		destroy: function (e) {
-			if(e.target.className !== 'destroy'){
+
+			// extra condition ensures calls from update() are not exited
+			if((e.type === 'click') && (e.target.className !== 'destroy')||(
+				(e.type === 'focusout') && (e.target.className !== 'edit'))){
 				return;
 			}
+
 			this.todos.splice(this.indexFromEl(e.target), 1);
 			this.render();
+
 		}
 	};
 
