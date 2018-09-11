@@ -102,7 +102,7 @@ jQuery(function ($) {
 				// and bind the this value in the router function
 				// to the app object
 				}.bind(this)
-			// and use the all route as the starting page for the application
+			// and use the all routes as the starting page for the application
 			}).init('/all');
 		},
 
