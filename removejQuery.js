@@ -1,4 +1,4 @@
-/* global jQuery, Handlebars, Router */
+/* global Handlebars, Router */
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
