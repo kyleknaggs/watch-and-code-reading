@@ -41,23 +41,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	};
 
 	var App = {
+		// done
 		init: function () {
-
+			// 1) set the val of this.todos
+				// to the val of the todos key on the localStorage object
+			this.todos = util.store('todos-jquery');
+			// 2) get the markup stored in #todo-template and #footer-template
+				// pass these strings into Handlebars to create 2 Handlebars templates
+				// and store these templates on this.todoTemplate and this.footerTemplate
+				// so they can be accessed later
 			var todoTemplate = document.querySelector('#todo-template').innerHTML;
 			var footerTemplate = document.querySelector('#footer-template').innerHTML;
-
-			this.todos = util.store('todos-jquery');
 			this.todoTemplate = Handlebars.compile(todoTemplate);
 			this.footerTemplate = Handlebars.compile(footerTemplate);
+			// 3) call the bindEvents() method to set up all the event listeners in the app
 			this.bindEvents();
-
+			// 4) create a new Router instance
+				// https://glitch.com/edit/#!/kk-todomvc-routingdemo?path=views/index.html:1:0
+				// that accounts for '/all', '/active' & '/completed' routes using ':'
+				// stores all of these url values on the a correspondingly named key on the App object
+				// manually change the this value inside of the Router object from the Router object to the App object
+				// and start the application on the '/all route'
 			new Router({
 				'/:filter': function (filter) {
 					this.filter = filter;
 					this.render();
 				}.bind(this)
 			}).init('/all');
-
 		},
 		bindEvents: function () {
 			// grab elements
