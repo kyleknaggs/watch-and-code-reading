@@ -68,8 +68,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			// bind events
 			newTodo.addEventListener('keyup', this.create.bind(this));
 			toggleAll.addEventListener('change', this.toggleAll.bind(this));
-			footer.addEventListener('click', this.destroyCompleted.bind(this));
-			todoList.addEventListener('change',this.toggle.bind(this));
+			footer.addEventListener('click', function(e) {
+				if (e.target.id === 'clear-completed'){
+					App.destroyCompleted();
+			 	}
+		 	});
+			todoList.addEventListener('change', function(e){
+				if(e.target.className === 'toggle'){
+					App.toggle();
+				}
+			});
 			todoList.addEventListener('dblclick',this.edit.bind(this));
 			todoList.addEventListener('keyup',this.editKeyup.bind(this));
 			todoList.addEventListener('focusout',this.update.bind(this));
@@ -154,9 +162,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			return this.todos;
 		},
 		destroyCompleted: function (e) {
-			if(e.target.id !== 'clear-completed'){
-				return;
-			}
 			this.todos = this.getActiveTodos();
 			this.filter = 'all';
 			this.render();
@@ -203,9 +208,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			this.render();
 		},
 		toggle: function (e) {
-			if(e.target.className !== 'toggle'){
-				return;
-			}
 			var i = this.indexFromEl(e.target);
 			this.todos[i].completed = !this.todos[i].completed;
 			this.render();
