@@ -69,13 +69,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				}.bind(this)
 			}).init('/all');
 		},
+		// done
 		bindEvents: function () {
-			// grab elements
+			// 1) grab #new-todo, #toggle-all, #footer & #todo-list
 			var newTodo = document.querySelector('#new-todo');
 			var toggleAll = document.querySelector('#toggle-all');
 			var footer = document.querySelector('#footer');
 			var todoList = document.querySelector('#todo-list');
-			// bind events
+			// 2) and bind event listeners to the following elements
+				// call App.create() when a keyup event occurs on #new-todo
+				// call App.toggleAll() when a change event occurs on #toggle-all
+				// call App.destroyCompleted() when a click event occurs on #footer
+				// call App.toggle() when a change event occurs on #todo-list
+				// call App.edit() when a dblclick event occurs on #todo-list
+				// call App.editKeyup() when a keyup event occurs on #todo-list
+				// call App.update() when a focusout event occurs on #todo-list
+				// call App.destroy() when a click event occurs on #todo-list
 			newTodo.addEventListener('keyup', this.create.bind(this));
 			toggleAll.addEventListener('change', this.toggleAll.bind(this));
 			footer.addEventListener('click', this.destroyCompleted.bind(this));
@@ -195,9 +204,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			}
 		},
 		create: function (e) {
+			// 1) grab the element that triggered the event
+			// 2) return the value stored in this element's value attribute, while removing any surrounding whitespace
 			var input = e.target;
 			var val = input.value.trim();
-
+			// 3) then exit the function if in fact the check to see if the enter key was clicked
 			if (e.which !== ENTER_KEY || !val) {
 				return;
 			}
